@@ -1,0 +1,11 @@
+Switch the ./deps symlink to point to local or actual dependencies directory.
+
+Local dependencies are in the ./deps-local directory.
+Actual dependencies are in the ./vendor directory.
+Local dependencies can be helpful for development purposes.
+
+Usage:
+    lightship switchdeps [options] --mode=<mode>
+
+Options:
+    --mode    'local' or 'actual'.

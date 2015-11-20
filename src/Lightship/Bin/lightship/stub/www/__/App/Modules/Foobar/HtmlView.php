@@ -1,0 +1,29 @@
+<?php
+namespace App\Modules\Foobar;
+
+class HtmlView extends \App\HtmlView {
+	protected function resolveHints() {
+		parent::resolveHints();
+
+		$hints = $this->getHints();
+		$hints->set('doLoad', true);
+	}
+
+	public function createMainContent() {
+		$model = $this->getModel();
+
+		ob_start();
+
+		?>
+		<article>
+			<header>
+				<h2>Foobar</h2>
+			</header>
+
+			<p>Request ID: <?php $this->out($model->get('requestId')); ?></p>
+		</article>
+		<?php
+
+		return ob_get_clean();
+	}
+}

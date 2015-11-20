@@ -1,0 +1,12 @@
+Symlinks dependencies to the front-end web area.
+e.g. '/deps/foo' to '/www/__/deps/foo'
+
+Usage:
+    lightship webdep [options] --name=<vendor/package>
+
+Options:
+    --name      Vendor and package name of the dependency, matching the directory to be symlinked.
+                Names are case sensitive and should match the directory names exactly.
+                e.g. some-vendor/foo-package
+
+    --remove    Removes the specified symlink.

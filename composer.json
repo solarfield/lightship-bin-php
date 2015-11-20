@@ -1,0 +1,8 @@
+{
+	"name": "solarfield/lightship-php-bin",
+	"description": "Utility binaries (phar) for lightship",
+
+	"support": {
+		"source": "https://github.com/solarfield/lightship-bin-php.git"
+	}
+}

@@ -1,0 +1,12 @@
+Create a new app project at --path
+
+The created project will contain both a terminal and web app.
+
+Usage:
+    lightship app [options] --path=<path>
+
+Options:
+    --path     The target directory.
+
+    --force    Force creation even if target directory exists.
+               Existing sub-directories/files will not be modified.
