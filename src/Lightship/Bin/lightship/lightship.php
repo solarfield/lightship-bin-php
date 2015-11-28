@@ -4,6 +4,11 @@ namespace Lightship\Bin;
 use Exception;
 
 class Bin {
+	const OS_WINDOWS = 1;
+	const OS_LINUX = 2;
+
+	private $os;
+
 	//imported args
 	private $args = [];
 
@@ -149,6 +154,10 @@ class Bin {
 	 * @throws BinException
 	 */
 	private function switchDeps($aProjectDir, $aMode, $aForce = true, &$aInfo = []) {
+		$aInfo = [
+			'msg' => null,
+		];
+
 		$depsLocalPath = $aProjectDir . DIRECTORY_SEPARATOR . 'deps-local';
 
 		if (file_exists($depsLocalPath)) {
@@ -199,13 +208,6 @@ class Bin {
 			}
 
 			$existingTarget = readlink($linkPath);
-
-			if ($existingTarget != $vendorTarget && $existingTarget != $depsLocalTarget) {
-				throw new BinException(
-					"Expected '$linkPath' to point to '$vendorTarget' or '$depsLocalTarget'.",
-					0, null, 'switchdeps'
-				);
-			}
 		}
 
 
@@ -243,25 +245,33 @@ class Bin {
 
 		if ($existingTarget !== null) {
 			if ($aForce) {
-				unlink($linkPath);
+				if ($this->os == self::OS_WINDOWS) rmdir($linkPath);
+				else unlink($linkPath);
+
 				symlink($target, $linkPath);
-				$aInfo['msg'] = "OK      '$linkPath' now points to $target ($targetLabel).\n";
+				$aInfo['msg'] .= "OK      '$linkPath' now points to $target ($targetLabel).\n";
 			}
 
 			else {
-				if ($existingTarget == $vendorTarget) {
-					$aInfo['msg'] = "OK      '$linkPath' already exists.\n";
-				}
-
-				else {
-					$aInfo['msg'] = "WARNING '$linkPath' points to '$existingTarget'.\n";
-				}
+				$aInfo['msg'] .= "OK      '$linkPath' already exists.\n";
 			}
 		}
 
 		else {
 			symlink($target, $linkPath);
-			$aInfo['msg'] = "OK     '$linkPath' now points to $target ($targetLabel).\n";
+			$aInfo['msg'] .= "OK      '$linkPath' now points to $target ($targetLabel).\n";
+		}
+
+		$existingTarget = readlink($linkPath);
+
+		if ($existingTarget != $vendorTarget && $existingTarget != $depsLocalTarget) {
+			if ($existingTarget == $realVendorPath || $existingTarget == $realDepsLocalPath) {
+				$aInfo['msg'] .= "WARNING '$linkPath' uses absolute path '$existingTarget'.\n";
+			}
+
+			else {
+				$aInfo['msg'] .= "WARNING '$linkPath' points to something unknown: '$existingTarget'.\n";
+			}
 		}
 	}
 
@@ -322,7 +332,10 @@ class Bin {
 		}
 
 		else {
-			symlink($linkTarget, $linkPath);
+			//WORKAROUND: symlink() fails on windows due to https://bugs.php.net/bug.php?id=48975
+			if ($this->os == self::OS_WINDOWS) shell_exec("mklink /D \"$linkPath\" \"$linkTarget\"");
+			else symlink($linkTarget, $linkPath);
+
 			$aInfo['msg'] = "OK      Dependency '$aName' added to web front-end.\n";
 		}
 	}
@@ -347,7 +360,9 @@ class Bin {
 						);
 					}
 
-					unlink($linkPath);
+					if ($this->os == self::OS_WINDOWS) rmdir($linkPath);
+					else unlink($linkPath);
+
 					$actuallyRemoved = true;
 				}
 			}
@@ -591,6 +606,10 @@ class Bin {
 		}
 
 		return $result;
+	}
+
+	public function __construct() {
+		$this->os = stripos(PHP_OS, 'win') !== false ? self::OS_WINDOWS : self::OS_LINUX;
 	}
 }
 
