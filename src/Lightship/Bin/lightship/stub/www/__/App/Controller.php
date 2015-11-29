@@ -1,10 +1,10 @@
 <?php
 namespace App;
 
-use Batten\Event;
-use Batten\Reflector;
+use Solarfield\Batten\Event;
+use Solarfield\Batten\Reflector;
 
-class Controller extends \Lightship\WebController {
+class Controller extends \Solarfield\Lightship\WebController {
 	protected function resolvePlugins() {
 		parent::resolvePlugins();
 

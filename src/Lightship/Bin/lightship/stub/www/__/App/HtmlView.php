@@ -1,11 +1,11 @@
 <?php
 namespace App;
 
-use Batten\Event;
-use Batten\Reflector;
-use Lightship\StringBufferEvent;
+use Solarfield\Batten\Event;
+use Solarfield\Batten\Reflector;
+use Solarfield\Lightship\StringBufferEvent;
 
-class HtmlView extends \Lightship\HtmlView {
+class HtmlView extends \Solarfield\Lightship\HtmlView {
 	protected function resolveStyleIncludes() {
 		parent::resolveStyleIncludes();
 

@@ -1,11 +1,11 @@
 <?php
 namespace App\Modules\Error;
 
-use Batten\UnresolvedRouteException;
-use Lightship\HttpExceptionInterface;
-use Lightship\UserFriendlyException;
-use Lightship\UserFriendlyExceptionInterface;
-use Ok\HttpUtils;
+use Solarfield\Batten\UnresolvedRouteException;
+use Solarfield\Lightship\HttpExceptionInterface;
+use Solarfield\Lightship\UserFriendlyException;
+use Solarfield\Lightship\UserFriendlyExceptionInterface;
+use Solarfield\Ok\HttpUtils;
 
 class Controller extends \App\Controller {
 	public function processRoute($aInfo) {

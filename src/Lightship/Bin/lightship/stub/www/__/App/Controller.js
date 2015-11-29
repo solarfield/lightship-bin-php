@@ -10,7 +10,7 @@ if (!self.App) self.App = {};
 
 /**
  * @class App.Controller
- * @extends Lightship.Controller
+ * @extends Solarfield.Lightship.Controller
  * @constructor
  */
 App.Controller = Ok.extendObject(Lightship.Controller, {

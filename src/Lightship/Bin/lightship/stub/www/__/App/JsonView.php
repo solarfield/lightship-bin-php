@@ -1,6 +1,6 @@
 <?php
 namespace App;
 
-class JsonView extends \Lightship\JsonView {
+class JsonView extends \Solarfield\Lightship\JsonView {
 
 }

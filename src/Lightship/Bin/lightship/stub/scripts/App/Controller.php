@@ -1,6 +1,6 @@
 <?php
 namespace App;
 
-class Controller extends \Lightship\TerminalController {
+class Controller extends \Solarfield\Lightship\TerminalController {
 
 }
