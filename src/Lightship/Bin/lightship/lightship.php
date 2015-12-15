@@ -525,6 +525,7 @@ class Bin {
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/ok-kit-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/batten-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/lightship-js', $info); echo($info['msg']);
+		$info = []; $this->addWebDep($pkgDirPath, 'systemjs/systemjs', $info); echo($info['msg']);
 	}
 
 	private function goswitchdeps() {

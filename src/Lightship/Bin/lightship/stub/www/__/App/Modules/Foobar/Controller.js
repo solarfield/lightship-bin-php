@@ -1,27 +1,26 @@
-"use strict";
+define(
+	'app/App/Controller',
+	[
+		'app/App/Environment',
+		'app/App/Controller',
+		'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+	],
+	function (Env, AppController, Ok) {
+		"use strict";
 
-/**
- * @namespace App.Modules.Foobar
- * @globals App.Modules.Foobar
- */
-Ok.defineNamespace('App.Modules.Foobar');
+		/**
+		 * @class App.Modules.Foobar.Controller
+		 */
+		var Controller = Ok.extendObject(AppController, {
+			hookup: function () {
+				Controller.super.prototype.hookup.apply(this);
 
+				console.log('Foobar controller was hooked up');
+				//TODO
+			}
+		});
 
-
-
-/**
- * @class App.Modules.Foobar.Controller
- */
-App.Modules.Foobar.Controller = Ok.extendObject(App.Controller, {
-	construct: function () {
-		App.Controller.apply(this, arguments);
-
-		//TODO
-	},
-
-	hookup: function () {
-		App.Controller.prototype.hookup.apply(this);
-
-		//TODO
+		Ok.defineNamespace('App.Modules.Foobar');
+		return App.Modules.Foobar.Controller = Controller;
 	}
-});
+);

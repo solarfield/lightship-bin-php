@@ -1,14 +1,15 @@
-//import some Solarfield stuff as globals for convenience
-if (!window.Ok) window.Ok = Solarfield.Ok;
-if (!window.Batten) window.Batten = Solarfield.Batten;
-if (!window.Lightship) window.Lightship = Solarfield.Lightship;
+define(
+  'app/App/Environment',
+  [
+		'solarfield/lightship-js/src/Solarfield/Lightship/Environment',
+    'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+  ],
+  function (LightshipEnvironment, Ok) {
+		"use strict";
 
+		var Environment = Ok.extendObject(LightshipEnvironment);
 
-
-
-/**
- * @namespace App
- */
-if (!self.App) self.App = {};
-
-App.Environment = Ok.extendObject(Lightship.Environment);
+		Ok.defineNamespace('App');
+		return App.Environment = Environment;
+	}
+);

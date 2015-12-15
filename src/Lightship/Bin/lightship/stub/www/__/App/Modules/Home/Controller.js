@@ -1,27 +1,32 @@
-"use strict";
+define(
+	'app/App/Controller',
+	[
+		'app/App/Environment',
+		'app/App/Controller',
+		'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+	],
+	function (Env, AppController, Ok) {
+		"use strict";
 
-/**
- * @namespace App.Modules.Home
- * @globals App.Modules.Home
- */
-Ok.defineNamespace('App.Modules.Home');
+		/**
+		 * @class App.Modules.Home.Controller
+		 */
+		var Controller = Ok.extendObject(AppController, {
+			construct: function () {
+				Controller.super.apply(this, arguments);
 
+				//TODO
+			},
 
+			hookup: function () {
+				Controller.super.prototype.hookup.apply(this);
 
+				console.log('Home controller was hooked up');
+				//TODO
+			}
+		});
 
-/**
- * @class App.Modules.Home.Controller
- */
-App.Modules.Home.Controller = Ok.extendObject(App.Controller, {
-	construct: function () {
-		App.Controller.apply(this, arguments);
-
-		//TODO
-	},
-
-	hookup: function () {
-		App.Controller.prototype.hookup.apply(this);
-
-		//TODO
+		Ok.defineNamespace('App.Modules.Home');
+		return App.Modules.Home.Controller = Controller;
 	}
-});
+);
