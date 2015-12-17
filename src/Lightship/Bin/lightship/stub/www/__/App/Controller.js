@@ -28,8 +28,8 @@ define(
 				//TODO
 			},
 
-			go: function () {
-				Controller.super.prototype.go.apply(this, arguments);
+			doTask: function () {
+				Controller.super.prototype.doTask.apply(this, arguments);
 
 				//TODO
 			}

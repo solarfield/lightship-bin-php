@@ -21,4 +21,4 @@ unset($config);
 
 //boot the controller
 require_once __DIR__ . '/App/Controller.php';
-Controller::boot();
+Controller::bootstrap();
