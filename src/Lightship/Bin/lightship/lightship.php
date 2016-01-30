@@ -278,7 +278,7 @@ class Bin {
 	private function validateDepForWeb($aName) {
 		$matches = [];
 
-		if (preg_match('/^([^.\\\\\\/]+)\\/([^.\\\\\\/]+)$/', $aName, $matches) !== 1) {
+		if (preg_match('/^([^\\\\\\/]+)\\/([^\\\\\\/]+)$/', $aName, $matches) !== 1) {
 			throw new BinException(
 				"Invalid --name.",
 				0, null, 'webdep'
