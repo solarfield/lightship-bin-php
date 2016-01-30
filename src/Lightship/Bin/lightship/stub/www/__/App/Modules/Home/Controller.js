@@ -1,5 +1,5 @@
 define(
-	'app/App/Controller',
+	'app/App/Modules/Home/Controller',
 	[
 		'app/App/Environment',
 		'app/App/Controller',

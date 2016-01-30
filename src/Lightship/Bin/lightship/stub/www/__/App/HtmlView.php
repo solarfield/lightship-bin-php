@@ -89,7 +89,7 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 
 		if (Reflector::inSurfaceOrModuleMethodCall()) {
 			$this->dispatchEvent(
-				new StringBufferEvent('app-resolve-script-includes', ['target' => $this], $content)
+				new StringBufferEvent('app-create-main-content', ['target' => $this], $content)
 			);
 		}
 
