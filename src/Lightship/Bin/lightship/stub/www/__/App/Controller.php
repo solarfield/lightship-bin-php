@@ -1,9 +1,6 @@
 <?php
 namespace App;
 
-use Solarfield\Batten\Event;
-use Solarfield\Batten\Reflector;
-
 class Controller extends \Solarfield\Lightship\WebController {
 	protected function resolvePlugins() {
 		parent::resolvePlugins();
@@ -15,12 +12,6 @@ class Controller extends \Solarfield\Lightship\WebController {
 		parent::resolveOptions();
 
 		//TODO
-
-		if (Reflector::inSurfaceOrModuleMethodCall()) {
-			$this->dispatchEvent(
-				new Event('app-resolve-options', ['target' => $this])
-			);
-		}
 	}
 
 	public function processRoute($aInfo) {
@@ -49,11 +40,5 @@ class Controller extends \Solarfield\Lightship\WebController {
 		$input = $this->getInput();
 
 		//TODO
-
-		if (Reflector::inSurfaceOrModuleMethodCall()) {
-			$this->dispatchEvent(
-				new Event('app-do-task', ['target' => $this])
-			);
-		}
 	}
 }

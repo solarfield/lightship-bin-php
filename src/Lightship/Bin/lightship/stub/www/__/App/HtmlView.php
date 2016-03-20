@@ -1,8 +1,6 @@
 <?php
 namespace App;
 
-use Solarfield\Batten\Event;
-use Solarfield\Batten\Reflector;
 use Solarfield\Lightship\StringBufferEvent;
 
 class HtmlView extends \Solarfield\Lightship\HtmlView {
@@ -24,12 +22,6 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 			'group' => 2000,
 			'bundleKey' => 'module',
 		]);
-
-		if (Reflector::inSurfaceOrModuleMethodCall()) {
-			$this->dispatchEvent(
-				new Event('app-resolve-style-includes', ['target' => $this])
-			);
-		}
 	}
 
 	protected function resolveScriptIncludes() {
@@ -42,12 +34,6 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 		/*$includes->addFile($appWebPath . '/deps/foo/foo.js', [
 			'bundleKey' => 'app',
 		]);*/
-
-		if (Reflector::inSurfaceOrModuleMethodCall()) {
-			$this->dispatchEvent(
-				new Event('app-resolve-script-includes', ['target' => $this])
-			);
-		}
 	}
 
 	public function createBodyContent() {
@@ -85,14 +71,6 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 	}
 
 	public function createMainContent() {
-		$content = '';
-
-		if (Reflector::inSurfaceOrModuleMethodCall()) {
-			$this->dispatchEvent(
-				new StringBufferEvent('app-create-main-content', ['target' => $this], $content)
-			);
-		}
-
-		return $content;
+		return null;
 	}
 }
