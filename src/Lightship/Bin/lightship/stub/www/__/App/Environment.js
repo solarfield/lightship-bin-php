@@ -2,14 +2,14 @@ define(
   'app/App/Environment',
   [
 		'solarfield/lightship-js/src/Solarfield/Lightship/Environment',
-    'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+    'solarfield/ok-kit-js/src/Solarfield/Ok/ObjectUtils'
   ],
-  function (LightshipEnvironment, Ok) {
+  function (LightshipEnvironment, ObjectUtils) {
 		"use strict";
 
-		var Environment = Ok.extendObject(LightshipEnvironment);
+		var Environment = ObjectUtils.extend(LightshipEnvironment);
 
-		Ok.defineNamespace('App');
+	  ObjectUtils.defineNamespace('App');
 		return App.Environment = Environment;
 	}
 );

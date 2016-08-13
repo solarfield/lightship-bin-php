@@ -3,15 +3,15 @@ define(
 	[
 		'app/App/Environment',
 		'app/App/Controller',
-		'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+		'solarfield/ok-kit-js/src/Solarfield/Ok/ObjectUtils'
 	],
-	function (Env, AppController, Ok) {
+	function (Env, AppController, ObjectUtils) {
 		"use strict";
 
 		/**
 		 * @class App.Modules.Foobar.Controller
 		 */
-		var Controller = Ok.extendObject(AppController, {
+		var Controller = ObjectUtils.extend(AppController, {
 			hookup: function () {
 				Controller.super.prototype.hookup.apply(this);
 
@@ -20,7 +20,7 @@ define(
 			}
 		});
 
-		Ok.defineNamespace('App.Modules.Foobar');
+		ObjectUtils.defineNamespace('App.Modules.Foobar');
 		return App.Modules.Foobar.Controller = Controller;
 	}
 );

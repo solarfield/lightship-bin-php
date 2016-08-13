@@ -3,15 +3,15 @@ define(
 	[
 		'app/App/Environment',
 		'app/App/Controller',
-		'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+		'solarfield/ok-kit-js/src/Solarfield/Ok/ObjectUtils'
 	],
-	function (Env, AppController, Ok) {
+	function (Env, AppController, ObjectUtils) {
 		"use strict";
 
 		/**
 		 * @class App.Modules.Home.Controller
 		 */
-		var Controller = Ok.extendObject(AppController, {
+		var Controller = ObjectUtils.extend(AppController, {
 			construct: function () {
 				Controller.super.apply(this, arguments);
 
@@ -26,7 +26,7 @@ define(
 			}
 		});
 
-		Ok.defineNamespace('App.Modules.Home');
+		ObjectUtils.defineNamespace('App.Modules.Home');
 		return App.Modules.Home.Controller = Controller;
 	}
 );

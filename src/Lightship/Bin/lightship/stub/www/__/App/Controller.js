@@ -3,9 +3,9 @@ define(
 	[
 		'app/App/Environment',
 		'solarfield/lightship-js/src/Solarfield/Lightship/Controller',
-		'solarfield/ok-kit-js/src/Solarfield/Ok/ok'
+		'solarfield/ok-kit-js/src/Solarfield/Ok/ObjectUtils'
 	],
-	function (Env, LightshipController, Ok) {
+	function (Env, LightshipController, ObjectUtils) {
 		"use strict";
 
 		/**
@@ -13,7 +13,7 @@ define(
 		 * @extends Solarfield.Lightship.Controller
 		 * @constructor
 		 */
-		var Controller = Ok.extendObject(LightshipController, {
+		var Controller = ObjectUtils.extend(LightshipController, {
 			constructor: function (aCode, aOptions) {
 				Controller.super.apply(this, arguments);
 
@@ -35,7 +35,7 @@ define(
 			}
 		});
 
-		Ok.defineNamespace('App');
+		ObjectUtils.defineNamespace('App');
 		return App.Controller = Controller;
 	}
 );
