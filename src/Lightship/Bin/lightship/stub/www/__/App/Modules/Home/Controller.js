@@ -12,7 +12,7 @@ define(
 		 * @class App.Modules.Home.Controller
 		 */
 		var Controller = ObjectUtils.extend(AppController, {
-			construct: function () {
+			constructor: function () {
 				Controller.super.apply(this, arguments);
 
 				//TODO
