@@ -22,10 +22,11 @@ define(
 			},
 
 			hookup: function () {
-				Controller.super.prototype.hookup.apply(this);
-
-				console.log('App controller was hooked up');
-				//TODO
+				return Controller.super.prototype.hookup.call(this)
+				.then(function () {
+					console.log('App controller was hooked up');
+					//TODO
+				});
 			},
 
 			doTask: function () {

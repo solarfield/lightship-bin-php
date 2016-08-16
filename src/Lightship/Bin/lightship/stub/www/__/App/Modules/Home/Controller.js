@@ -19,10 +19,12 @@ define(
 			},
 
 			hookup: function () {
-				Controller.super.prototype.hookup.apply(this);
+				return Controller.super.prototype.hookup.call(this)
+				.then(function () {
+					console.log('Home controller was hooked up');
 
-				console.log('Home controller was hooked up');
-				//TODO
+					//TODO
+				});
 			}
 		});
 

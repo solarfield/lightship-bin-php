@@ -13,10 +13,12 @@ define(
 		 */
 		var Controller = ObjectUtils.extend(AppController, {
 			hookup: function () {
-				Controller.super.prototype.hookup.apply(this);
+				return Controller.super.prototype.hookup.call(this)
+				.then(function () {
+					console.log('Foobar controller was hooked up');
 
-				console.log('Foobar controller was hooked up');
-				//TODO
+					//TODO
+				});
 			}
 		});
 
