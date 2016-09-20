@@ -13,7 +13,7 @@ class Bin {
 	private $args = [];
 
 	//'help' should always be the first item
-	private $availableCommands = array('help', 'app', 'switchdeps', 'webdep', 'version');
+	private $availableCommands = array('help', 'app', 'webdep', 'version');
 
 	//retrieves an argument value by name
 	//$aName includes any - or -- prefix
@@ -145,136 +145,6 @@ class Bin {
 		return $result;
 	}
 
-	/**
-	 * Repoints the $PROJECT/deps symlink to either $PROJECT/vendor or $PROJECT/deps-local
-	 * @param string $aProjectDir Path to project directory.
-	 * @param string $aMode 'actual' (vendor) or 'local' (deps-local).
-	 * @param bool $aForce If false, existing symlink will not be modified.
-	 * @param array $aInfo Will be filled with message, etc.
-	 * @throws BinException
-	 */
-	private function switchDeps($aProjectDir, $aMode, $aForce = true, &$aInfo = []) {
-		$aInfo = [
-			'msg' => null,
-		];
-
-		$depsLocalPath = $aProjectDir . DIRECTORY_SEPARATOR . 'deps-local';
-
-		if (file_exists($depsLocalPath)) {
-			$realDepsLocalPath = realpath($depsLocalPath);
-
-			if (!is_dir($depsLocalPath)) {
-				throw new BinException(
-					"Expected '$depsLocalPath' to be a directory.",
-					0, null, 'switchdeps'
-				);
-			}
-		}
-
-		else {
-			$realDepsLocalPath = null;
-		}
-
-
-		$vendorPath = $aProjectDir . DIRECTORY_SEPARATOR . 'vendor';
-
-		if (file_exists($vendorPath)) {
-			$realVendorPath = realpath($vendorPath);
-
-			if (!is_dir($vendorPath)) {
-				throw new BinException(
-					"Expected '$vendorPath' to be a directory.",
-					0, null, 'switchdeps'
-				);
-			}
-		}
-
-		else {
-			$realVendorPath = null;
-		}
-
-
-		$linkPath = $aProjectDir . DIRECTORY_SEPARATOR . 'deps';
-		$existingTarget = null;
-		$vendorTarget = '.' . DIRECTORY_SEPARATOR . 'vendor';
-		$depsLocalTarget = '.' . DIRECTORY_SEPARATOR . 'deps-local';
-
-		if (file_exists($linkPath)) {
-			if (!is_link($linkPath)) {
-				throw new BinException(
-					"Expected '$linkPath' to be a symlink.",
-					0, null, 'switchdeps'
-				);
-			}
-
-			$existingTarget = readlink($linkPath);
-		}
-
-
-		if ($aMode == 'actual') {
-			if ($realVendorPath === null) {
-				throw new BinException(
-					"No directory at '$vendorPath'.",
-					0, null, 'switchdeps'
-				);
-			}
-
-			$target = $vendorTarget;
-			$targetLabel = 'actual';
-		}
-
-		else if ($aMode == 'local') {
-			if ($realDepsLocalPath === null) {
-				throw new BinException(
-					"No directory at '$depsLocalPath'.",
-					0, null, 'switchdeps'
-				);
-			}
-
-			$target = $depsLocalTarget;
-			$targetLabel = 'local';
-		}
-
-		else {
-			throw new BinException(
-				"Invalid --mode.",
-				0, null, 'switchdeps'
-			);
-		}
-
-
-		if ($existingTarget !== null) {
-			if ($aForce) {
-				if ($this->os == self::OS_WINDOWS) rmdir($linkPath);
-				else unlink($linkPath);
-
-				symlink($target, $linkPath);
-				$aInfo['msg'] .= "OK      '$linkPath' now points to $target ($targetLabel).\n";
-			}
-
-			else {
-				$aInfo['msg'] .= "OK      '$linkPath' already exists.\n";
-			}
-		}
-
-		else {
-			symlink($target, $linkPath);
-			$aInfo['msg'] .= "OK      '$linkPath' now points to $target ($targetLabel).\n";
-		}
-
-		$existingTarget = readlink($linkPath);
-
-		if ($existingTarget != $vendorTarget && $existingTarget != $depsLocalTarget) {
-			if ($existingTarget == $realVendorPath || $existingTarget == $realDepsLocalPath) {
-				$aInfo['msg'] .= "WARNING '$linkPath' uses absolute path '$existingTarget'.\n";
-			}
-
-			else {
-				$aInfo['msg'] .= "WARNING '$linkPath' points to something unknown: '$existingTarget'.\n";
-			}
-		}
-	}
-
 	private function validateDepForWeb($aName) {
 		$matches = [];
 
@@ -294,7 +164,7 @@ class Bin {
 	private function addWebDep($aProjectDir, $aName, &$aInfo = array()) {
 		$parts = $this->validateDepForWeb($aName);
 
-		if (!file_exists($aProjectDir . '/deps/' . $aName)) {
+		if (!file_exists($aProjectDir . '/vendor/' . $aName)) {
 			throw new BinException(
 				"Dependency '$aName' was not found.",
 				0, null, 'webdep'
@@ -321,7 +191,7 @@ class Bin {
 			. DIRECTORY_SEPARATOR . '..'
 			. DIRECTORY_SEPARATOR . '..'
 			. DIRECTORY_SEPARATOR . '..'
-			. DIRECTORY_SEPARATOR . 'deps'
+			. DIRECTORY_SEPARATOR . 'vendor'
 			. DIRECTORY_SEPARATOR . $parts['vendor']
 			. DIRECTORY_SEPARATOR . $parts['package'];
 
@@ -332,6 +202,10 @@ class Bin {
 		}
 
 		else {
+			if (readlink($linkPath) !== false) {
+				$this->removeWebDep($aProjectDir, $aName);
+			}
+
 			//WORKAROUND: symlink() fails on windows due to https://bugs.php.net/bug.php?id=48975
 			if ($this->os == self::OS_WINDOWS) shell_exec("mklink /D \"$linkPath\" \"$linkTarget\"");
 			else symlink($linkTarget, $linkPath);
@@ -352,7 +226,7 @@ class Bin {
 			if (file_exists($webDepsVendorPath)) {
 				$linkPath = $webDepsVendorPath . DIRECTORY_SEPARATOR . $parts['package'];
 
-				if (file_exists($linkPath)) {
+				if (readlink($linkPath) !== false) {
 					if (!is_link($linkPath)) {
 						throw new BinException(
 							"Expected symbolic link at '$linkPath'.",
@@ -379,10 +253,6 @@ class Bin {
 	private function gohelp() {
 		if ($this->arg('app')) {
 			echo(file_get_contents('phar://lightship.phar/help/app.txt'));
-		}
-
-		else if ($this->arg('switchdeps')) {
-			echo(file_get_contents('phar://lightship.phar/help/switchdeps.txt'));
 		}
 
 		else if ($this->arg('webdep')) {
@@ -463,7 +333,6 @@ class Bin {
 
 		$this->initDir ($pkgDirPath . '/scripts');
 		$this->initFile($pkgDirPath . '/scripts/.gitignore', file_get_contents('phar://lightship.phar/stub/scripts/.gitignore'));
-		$this->initFile($pkgDirPath . '/scripts/bootstrap.php', file_get_contents('phar://lightship.phar/stub/scripts/bootstrap.php'));
 		$this->initFile($pkgDirPath . '/scripts/config.example.php', file_get_contents('phar://lightship.phar/stub/scripts/config.example.php'));
 		$this->initFile($pkgDirPath . '/scripts/execute.php', file_get_contents('phar://lightship.phar/stub/scripts/execute.php'));
 		$this->initDir ($pkgDirPath . '/scripts/App');
@@ -479,7 +348,6 @@ class Bin {
 		$this->initDir ($pkgDirPath . '/www/__');
 		$this->initFile($pkgDirPath . '/www/__/.gitignore', file_get_contents('phar://lightship.phar/stub/www/__/.gitignore'));
 		$this->initFile($pkgDirPath . '/www/__/config.example.php', file_get_contents('phar://lightship.phar/stub/www/__/config.example.php'));
-		$this->initFile($pkgDirPath . '/www/__/bootstrap.php', file_get_contents('phar://lightship.phar/stub/www/__/bootstrap.php'));
 
 		$this->initDir ($pkgDirPath . '/www/__/deps');
 		$this->initFile($pkgDirPath . '/www/__/deps/.gitignore', file_get_contents('phar://lightship.phar/stub/www/__/deps/.gitignore'));
@@ -520,19 +388,10 @@ class Bin {
 		$this->initDir ($pkgDirPath . '/www/files/cache');
 		$this->initFile($pkgDirPath . '/www/files/cache/.gitignore', file_get_contents('phar://lightship.phar/stub/www/files/cache/.gitignore'));
 
-		$info = []; $this->switchDeps($pkgDirPath, 'actual', false, $info); echo($info['msg']);
-
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/ok-kit-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/batten-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/lightship-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'systemjs/systemjs', $info); echo($info['msg']);
-	}
-
-	private function goswitchdeps() {
-		$info = [];
-		$this->switchDeps(getcwd(), $this->arg('--mode'), true, $info);
-
-		echo($info['msg']);
 	}
 
 	private function gowebdep() {

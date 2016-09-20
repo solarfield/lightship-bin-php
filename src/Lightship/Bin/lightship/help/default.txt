@@ -6,7 +6,6 @@ Usage:
 Some common commands are:
     help          Show this help information
     app           Create a new app project
-    switchdeps    Switch the app's dependencies between local and actual
     webdep        Symlink an app dependency to the front-end web area
     version       Show the version of this command line utility
 
