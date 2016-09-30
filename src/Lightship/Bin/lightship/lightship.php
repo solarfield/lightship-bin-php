@@ -202,7 +202,8 @@ class Bin {
 		}
 
 		else {
-			if (readlink($linkPath) !== false) {
+			//if a broken symlink exists
+			if (is_link($linkPath) !== false) {
 				$this->removeWebDep($aProjectDir, $aName);
 			}
 
@@ -225,15 +226,14 @@ class Bin {
 
 			if (file_exists($webDepsVendorPath)) {
 				$linkPath = $webDepsVendorPath . DIRECTORY_SEPARATOR . $parts['package'];
+				$isLink = is_link($linkPath);
 
-				if (readlink($linkPath) !== false) {
-					if (!is_link($linkPath)) {
-						throw new BinException(
-							"Expected symbolic link at '$linkPath'.",
-							0, null, 'webdep'
-						);
-					}
+				if (file_exists($linkPath) && !$isLink) throw new BinException(
+					"Expected symbolic link at '$linkPath'.",
+					0, null, 'webdep'
+				);
 
+				if (is_link($linkPath)) {
 					if ($this->os == self::OS_WINDOWS) rmdir($linkPath);
 					else unlink($linkPath);
 
