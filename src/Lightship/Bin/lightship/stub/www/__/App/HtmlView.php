@@ -28,7 +28,7 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 		parent::resolveScriptIncludes();
 
 		$includes = $this->getScriptIncludes();
-		$appWebPath = Environment::getVars()->get('appPackageWebPath');
+		$appWebPath = $this->getEnvironment()->getVars()->get('appPackageWebPath');
 
 		//TODO
 		/*$includes->addFile($appWebPath . '/deps/foo/foo.js', [
