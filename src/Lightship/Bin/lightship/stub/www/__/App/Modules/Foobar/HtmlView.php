@@ -2,9 +2,9 @@
 namespace App\Modules\Foobar;
 
 class HtmlView extends \App\HtmlView {
-	protected function resolveHints() {
-		parent::resolveHints();
-
+	protected function onResolveHints(ResolveHintsEvent $aEvt) {
+		parent::onResolveHints($aEvt);
+		
 		$hints = $this->getHints();
 		$hints->set('doLoad', true);
 	}
