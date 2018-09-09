@@ -4,43 +4,25 @@ declare(strict_types=1);
 namespace App;
 
 class Controller extends \Solarfield\Lightship\WebController {
-	protected function resolvePlugins() {
-		parent::resolvePlugins();
-
-		//TODO
-	}
-
-	protected function resolveOptions() {
-		parent::resolveOptions();
-
-		//TODO
-	}
-
-	public function processRoute($aInfo) {
+	protected function onProcessRoute(ProcessRouteEvent $aEvt) {
+		parent::onProcessRoute($aEvt);
+		
+		$route = $aEvt->getContext()->getRoute();
+		
 		//if url is "/" (root)
-		if ($aInfo['nextRoute'] == '') {
-			return [
+		if ($route->getNextStep() == '') {
+			$aEvt->getContext()->setRoute([
 				'moduleCode' => 'Home',
-			];
+			]);
 		}
-
+		
 		if (
-			preg_match('/^\\/foo\\/?$/i', (string)$aInfo['nextRoute']) == 1
-			|| preg_match('/^\\/bar\\/?$/i', (string)$aInfo['nextRoute']) == 1
+			preg_match('/^\\/foo\\/?$/i', (string)$route->getNextStep()) == 1
+			|| preg_match('/^\\/bar\\/?$/i', (string)$route->getNextStep()) == 1
 		) {
-			return [
+			$aEvt->getContext()->setRoute([
 				'moduleCode' => 'Foobar',
-			];
+			]);
 		}
-
-		return parent::processRoute($aInfo);
-	}
-
-	public function doTask() {
-		parent::doTask();
-
-		$input = $this->getInput();
-
-		//TODO
 	}
 }
