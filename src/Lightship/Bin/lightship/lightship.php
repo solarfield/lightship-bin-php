@@ -385,11 +385,8 @@ class Bin {
 		echo("NOTE    Check that web server user has write access to '$pkgDirPath/www/files' and descendants.\n");
 
 		$this->initFile($pkgDirPath . '/www/files/.gitignore');
-		$this->initDir ($pkgDirPath . '/www/files/cache');
-		$this->initFile($pkgDirPath . '/www/files/cache/.gitignore', file_get_contents('phar://lightship.phar/stub/www/files/cache/.gitignore'));
 
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/ok-kit-js', $info); echo($info['msg']);
-		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/batten-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'solarfield/lightship-js', $info); echo($info['msg']);
 		$info = []; $this->addWebDep($pkgDirPath, 'systemjs/systemjs', $info); echo($info['msg']);
 	}
