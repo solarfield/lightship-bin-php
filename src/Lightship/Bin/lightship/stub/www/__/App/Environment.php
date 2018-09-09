@@ -1,6 +1,6 @@
 <?php
 namespace App;
 
-abstract class Environment extends \Solarfield\Lightship\WebEnvironment {
+class Environment extends \Solarfield\Lightship\WebEnvironment {
 
 }

@@ -1,11 +1,9 @@
 define(
-	'app/App/Modules/Foobar/Controller',
 	[
-		'app/App/Environment',
 		'app/App/Controller',
 		'solarfield/ok-kit-js/src/Solarfield/Ok/ObjectUtils'
 	],
-	function (Env, AppController, ObjectUtils) {
+	function (AppController, ObjectUtils) {
 		"use strict";
 
 		/**
@@ -21,8 +19,7 @@ define(
 				});
 			}
 		});
-
-		ObjectUtils.defineNamespace('App.Modules.Foobar');
-		return App.Modules.Foobar.Controller = Controller;
+		
+		return Controller;
 	}
 );

@@ -1,6 +1,7 @@
 <?php
 namespace App\Modules\Error;
 
+use Solarfield\Lightship\Events\ProcessRouteEvent;
 use Solarfield\Batten\UnresolvedRouteException;
 use Solarfield\Lightship\HttpExceptionInterface;
 use Solarfield\Lightship\UserFriendlyException;
@@ -8,14 +9,16 @@ use Solarfield\Lightship\UserFriendlyExceptionInterface;
 use Solarfield\Ok\HttpUtils;
 
 class Controller extends \App\Controller {
-	public function processRoute($aInfo) {
-		return [
+	protected function onProcessRoute(ProcessRouteEvent $aEvt) {
+		parent::onProcessRoute($aEvt);
+		
+		$aEvt->getContext()->setRoute([
 			'moduleCode' => $this->getCode(),
-		];
+		]);
 	}
-
-	public function doTask() {
-		parent::doTask();
+	
+	protected function onDoTask(DoTaskEvent $aEvt) {
+		parent::onDoTask($aEvt);
 
 		$model = $this->getModel();
 
