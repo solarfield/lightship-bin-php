@@ -313,10 +313,9 @@ class Bin {
 
 		$this->initDir ($pkgDirPath . '/files');
 		echo("NOTE    Check that web server user has write access to '$pkgDirPath/files' and descendants.\n");
-
-		$this->initDir ($pkgDirPath . '/files/logs');
-		$this->initDir ($pkgDirPath . '/files/logs/php');
-		$this->initFile($pkgDirPath . '/files/logs/php/php.log');
+		
+		$this->initFile($pkgDirPath . '/files/.gitignore');
+		
 		$this->initDir ($pkgDirPath . '/infrastructure');
 		$this->initDir ($pkgDirPath . '/infrastructure/apache');
 		$this->initFile($pkgDirPath . '/infrastructure/apache/.gitignore', file_get_contents('phar://lightship.phar/stub/infrastructure/apache/.gitignore'));
