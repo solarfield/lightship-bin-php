@@ -25,8 +25,8 @@ class Controller extends \Solarfield\Lightship\WebController {
 		}
 
 		if (
-			preg_match('/^\\/foo\\/?$/i', $aInfo['nextRoute']) == 1
-			|| preg_match('/^\\/bar\\/?$/i', $aInfo['nextRoute']) == 1
+			preg_match('/^\\/foo\\/?$/i', (string)$aInfo['nextRoute']) == 1
+			|| preg_match('/^\\/bar\\/?$/i', (string)$aInfo['nextRoute']) == 1
 		) {
 			return [
 				'moduleCode' => 'Foobar',
