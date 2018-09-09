@@ -307,10 +307,7 @@ class Bin {
 			}
 		}
 		echo($info['msg']);
-
-		$this->initDir ($pkgDirPath . '/docs');
-		$this->initFile($pkgDirPath . '/docs/.gitignore');
-
+		
 		$this->initDir ($pkgDirPath . '/files');
 		echo("NOTE    Check that web server user has write access to '$pkgDirPath/files' and descendants.\n");
 		
