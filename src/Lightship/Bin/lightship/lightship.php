@@ -337,8 +337,6 @@ class Bin {
 		$this->initDir ($pkgDirPath . '/scripts/App/Modules');
 		$this->initDir ($pkgDirPath . '/scripts/App/Modules/HelloWorld');
 		$this->initFile($pkgDirPath . '/scripts/App/Modules/HelloWorld/Controller.php', file_get_contents('phar://lightship.phar/stub/scripts/App/Modules/HelloWorld/Controller.php'));
-		$this->initDir ($pkgDirPath . '/vendor');
-		$this->initFile($pkgDirPath . '/vendor/.gitignore', file_get_contents('phar://lightship.phar/stub/vendor/.gitignore'));
 		$this->initDir ($pkgDirPath . '/www');
 		$this->initFile($pkgDirPath . '/www/index.php', file_get_contents('phar://lightship.phar/stub/www/index.php'));
 		$this->initDir ($pkgDirPath . '/www/__');
