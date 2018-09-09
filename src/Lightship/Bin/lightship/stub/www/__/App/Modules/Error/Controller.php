@@ -1,11 +1,12 @@
 <?php
 namespace App\Modules\Error;
 
+use Solarfield\Lightship\Errors\UnresolvedRouteException;
+use Solarfield\Lightship\Events\DoTaskEvent;
 use Solarfield\Lightship\Events\ProcessRouteEvent;
-use Solarfield\Batten\UnresolvedRouteException;
-use Solarfield\Lightship\HttpExceptionInterface;
-use Solarfield\Lightship\UserFriendlyException;
-use Solarfield\Lightship\UserFriendlyExceptionInterface;
+use Solarfield\Lightship\Errors\HttpExceptionInterface;
+use Solarfield\Lightship\Errors\UserFriendlyException;
+use Solarfield\Lightship\Errors\UserFriendlyExceptionInterface;
 use Solarfield\Ok\HttpUtils;
 
 class Controller extends \App\Controller {
