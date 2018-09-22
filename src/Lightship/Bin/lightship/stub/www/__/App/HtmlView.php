@@ -14,14 +14,12 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 			'base' => 'app',
 			'onlyIfExists' => true,
 			'group' => 2000,
-			'bundleKey' => 'app',
 		]);
 		
 		$includes->addFile('/style/style.css', [
 			'base' => 'module',
 			'onlyIfExists' => true,
 			'group' => 2000,
-			'bundleKey' => 'module',
 		]);
 	}
 	
