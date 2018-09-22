@@ -7,28 +7,28 @@ use Solarfield\Lightship\Events\ResolveStyleIncludesEvent;
 class HtmlView extends \Solarfield\Lightship\HtmlView {
 	protected function onResolveStyleIncludes(ResolveStyleIncludesEvent $aEvt) {
 		parent::onResolveStyleIncludes($aEvt);
-		
+
 		$includes = $this->getStyleIncludes();
-		
+
 		$includes->addFile('/style/style.css', [
 			'base' => 'app',
 			'onlyIfExists' => true,
 			'group' => 2000,
 		]);
-		
+
 		$includes->addFile('/style/style.css', [
 			'base' => 'module',
 			'onlyIfExists' => true,
 			'group' => 2000,
 		]);
 	}
-	
+
 	protected function onResolveScriptIncludes(ResolveScriptIncludesEvent $aEvt) {
 		parent::onResolveScriptIncludes($aEvt);
-		
+
 		$includes = $this->getScriptIncludes();
 		$appWebPath = $this->getEnvironment()->getVars()->get('appPackageWebPath');
-		
+
 		//TODO
 		/*$includes->addFile($appWebPath . '/deps/foo/foo.js', [
 			'bundleKey' => 'app',

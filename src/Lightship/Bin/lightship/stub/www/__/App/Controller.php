@@ -17,7 +17,7 @@ class Controller extends \Solarfield\Lightship\WebController {
 				'moduleCode' => 'Home',
 			]);
 		}
-		
+
 		if (
 			preg_match('/^\\/foo\\/?$/i', (string)$route->getNextStep()) == 1
 			|| preg_match('/^\\/bar\\/?$/i', (string)$route->getNextStep()) == 1
