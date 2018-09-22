@@ -355,8 +355,6 @@ class Bin {
 		$this->initFile($pkgDirPath . '/www/__/App/JsonView.php', file_get_contents('phar://lightship.phar/stub/www/__/App/JsonView.php'));
 		$this->initDir ($pkgDirPath . '/www/__/App/style');
 		$this->initFile($pkgDirPath . '/www/__/App/style/style.css');
-		$this->initDir ($pkgDirPath . '/www/__/App/style/images');
-		$this->initFile($pkgDirPath . '/www/__/App/style/images/.gitignore');
 		$this->initDir ($pkgDirPath . '/www/__/App/Modules');
 
 		$this->initDir ($pkgDirPath . '/www/__/App/Modules/Home');
