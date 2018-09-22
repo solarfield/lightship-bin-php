@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Solarfield\Lightship\Events\ProcessRouteEvent;
+
 class Controller extends \Solarfield\Lightship\WebController {
 	protected function onProcessRoute(ProcessRouteEvent $aEvt) {
 		parent::onProcessRoute($aEvt);

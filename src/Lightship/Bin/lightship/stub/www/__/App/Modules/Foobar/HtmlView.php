@@ -1,6 +1,8 @@
 <?php
 namespace App\Modules\Foobar;
 
+use Solarfield\Lightship\Events\ResolveHintsEvent;
+
 class HtmlView extends \App\HtmlView {
 	protected function onResolveHints(ResolveHintsEvent $aEvt) {
 		parent::onResolveHints($aEvt);

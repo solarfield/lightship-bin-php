@@ -1,6 +1,8 @@
 <?php
 namespace App\Modules\Foobar;
 
+use Solarfield\Lightship\Events\DoTaskEvent;
+
 class Controller extends \App\Controller {
 	private function doLoad() {
 		$model = $this->getModel();
