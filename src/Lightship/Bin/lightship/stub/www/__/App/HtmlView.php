@@ -1,7 +1,6 @@
 <?php
 namespace App;
 
-use Solarfield\Lightship\Events\ResolveScriptIncludesEvent;
 use Solarfield\Lightship\Events\ResolveStyleIncludesEvent;
 
 class HtmlView extends \Solarfield\Lightship\HtmlView {
