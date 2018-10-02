@@ -6,8 +6,10 @@ define(
   function (LightshipEnvironment, ObjectUtils) {
 		"use strict";
 
-		var Environment = ObjectUtils.extend(LightshipEnvironment);
-		
+		var Environment = ObjectUtils.extend(LightshipEnvironment, {
+
+		});
+
 		return Environment;
 	}
 );
