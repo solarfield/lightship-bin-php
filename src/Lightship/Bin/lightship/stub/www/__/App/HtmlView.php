@@ -23,18 +23,6 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 		]);
 	}
 
-	protected function onResolveScriptIncludes(ResolveScriptIncludesEvent $aEvt) {
-		parent::onResolveScriptIncludes($aEvt);
-
-		$includes = $this->getScriptIncludes();
-		$appWebPath = $this->getEnvironment()->getVars()->get('appPackageWebPath');
-
-		//TODO
-		/*$includes->addFile($appWebPath . '/deps/foo/foo.js', [
-			'bundleKey' => 'app',
-		]);*/
-	}
-
 	public function createBodyContent() {
 		$model = $this->getModel();
 
