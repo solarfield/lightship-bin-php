@@ -14,9 +14,9 @@ class Controller extends \Solarfield\Lightship\WebController {
 
 	protected function onProcessRoute(ProcessRouteEvent $aEvt) {
 		parent::onProcessRoute($aEvt);
-		
+
 		$route = $aEvt->getContext()->getRoute();
-		
+
 		//if url is "/" (root)
 		if ($route->getNextStep() == '') {
 			$aEvt->getContext()->setRoute([
