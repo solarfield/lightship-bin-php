@@ -23,8 +23,6 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 	}
 
 	public function createBodyContent() {
-		$model = $this->getModel();
-
 		ob_start();
 
 		?>
