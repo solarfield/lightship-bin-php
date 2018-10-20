@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Solarfield\Lightship\Events\DoTaskEvent;
 use Solarfield\Lightship\Events\ProcessRouteEvent;
 
 class Controller extends \Solarfield\Lightship\WebController {
@@ -10,7 +11,6 @@ class Controller extends \Solarfield\Lightship\WebController {
 		parent::resolvePlugins();
 		$this->getPlugins()->register('LightshipBridge');
 	}
-
 
 	protected function onProcessRoute(ProcessRouteEvent $aEvt) {
 		parent::onProcessRoute($aEvt);
@@ -32,5 +32,11 @@ class Controller extends \Solarfield\Lightship\WebController {
 				'moduleCode' => 'Foobar',
 			]);
 		}
+	}
+
+	protected function onDoTask(DoTaskEvent $aEvt) {
+		parent::onDoTask($aEvt);
+
+		$this->getModel()->set('app.version', '1.0.0');
 	}
 }

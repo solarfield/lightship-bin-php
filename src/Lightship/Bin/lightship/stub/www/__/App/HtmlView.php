@@ -28,7 +28,7 @@ class HtmlView extends \Solarfield\Lightship\HtmlView {
 		?>
 		<header class="appHeader">
 			<h1 class="appHeading">
-				<a href="/">My App</a>
+				<a href="/"><?php $this->out('My App v' . $this->getModel()->get('app.version')) ?></a>
 			</h1>
 		</header>
 
